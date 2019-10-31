@@ -25,8 +25,11 @@ filterTable.on("click", function() {
   // Select the input element and get the raw HTML node
   var dateInput = d3.select("#datetime").property("value");
   var cityInput = d3.select("#city").property("value");
-  console.log('cityInput: ' + cityInput);
-
+  var stateInput = d3.select("#state").property("value");
+  var countryInput = d3.select("#country").property("value");
+  var shapeInput = d3.select("#shape").property("value");
+  
+  
   var filteredData = tableData;
   if (dateInput) {
     filteredData = filteredData.filter(data => data.datetime === dateInput);
@@ -36,12 +39,23 @@ filterTable.on("click", function() {
     filteredData = filteredData.filter(data => data.city === cityInput);
   }
 
+  if (stateInput) {
+    filteredData = filteredData.filter(data => data.state === stateInput);
+  }
+
+  if (countryInput) {
+    filteredData = filteredData.filter(data => data.country === countryInput);
+  }
+
+  if (shapeInput) {
+    filteredData = filteredData.filter(data => data.shape === shapeInput);
+  }
+
   if (filteredData != tableData) {
     // Delete existing data
     tbody.selectAll('tr').remove();
     tbody.selectAll('td').remove();
 
-    //Fix this part, it only appends to the bottom of the exisitng table
     filteredData.forEach((searchDate) => {
       const newrow = tbody.append("tr");
       for (key in searchDate){
